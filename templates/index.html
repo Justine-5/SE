@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/index.css">
+
+    <title>Login</title>
+</head>
+
+<body>
+    <div id="login_div">
+        <div class="login_div_right">
+            <img id="user_icon" src="../static/Icons/user.svg">
+            <h1 id="login_header">Welcome!</h1>      
+            <input id="login_password" type="password" placeholder="Enter Password" autofocus>
+            <label class="forgot_password" onclick="switchDiv()">Forgot your password?</label>
+            <button id="login_button" onclick="verifyLogin()">Login</button>
+        </div>
+    </div>
+
+    <div id="question_div">
+        <div class="login_div_right">
+            <h1 id="question_header">Forgot Password?</h1>      
+            <p id="security_question">No question set</p>
+            <input id="answer" type="password" placeholder="Enter your answer" autofocus>
+            <p class="forgot_password" onclick="switchDiv()">Use password instead</p>
+            <button id="question_button" onclick="verifyQuestion()">Login</button>
+        </div>
+    </div>
+
+    <script>
+
+        var login_attempts = 0;
+        
+        var loginDiv = document.getElementById("login_div");
+        loginDiv.style.display = "block";
+        var questionDiv = document.getElementById("question_div");
+        questionDiv.style.display = "none";
+
+        window.onload = async function () {
+            const res = await fetch('/get_security_question');
+            const data = await res.json();
+            document.getElementById("security_question").innerText = data.question || "No question set.";
+        };
+
+        function switchDiv() {
+            if (loginDiv.style.display == "none") {
+                loginDiv.style.display = "block";
+                questionDiv.style.display = "none";
+            }
+            else {
+                loginDiv.style.display = "none";
+                questionDiv.style.display = "block";
+            }
+        }
+
+        async function verifyLogin(){
+            const passVal = document.getElementById("login_password").value;
+
+            if (passVal === "") {
+                alert("Please input your password.");
+                return;
+            }
+
+            const res = await fetch("/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ password: passVal })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                window.location.href = "/dashboard";
+            } else {
+                alert(data.message);
+                login_attempts++;
+                if (login_attempts >= 3) {
+                    alert("You have reached the maximum number of failed login attempts. The system will lock temporarily.");
+                    login_attempts = 0;
+                    switchDiv();
+                }
+            }
+        }
+
+        
+        async function verifyQuestion(){
+            const ansVal = document.getElementById("answer").value;
+
+            if (ansVal === "") {
+                alert("Please input your answer.");
+                return;
+            }
+
+            const res = await fetch("/verify_answer", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ answer: ansVal })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                window.location.href = "/dashboard";
+                
+            } else {
+                alert(data.message);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

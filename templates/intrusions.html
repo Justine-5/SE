@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../static/general.css">
+    <link rel="stylesheet" href="../static/cars.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap" rel="stylesheet">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <main>
+        <nav>
+            <a href="/dashboard"><img src="../static/Icons/home.png" class="nav_icons"></a>
+            <a href="/cars"><img src="../static/Icons/car.png" class="nav_icons"></a>
+            <a href="/motorcycles"><img src="../static/Icons/motor.png" class="nav_icons"></a>
+            <a href="/public"><img src="../static/Icons/bus.png" class="nav_icons"></a>
+            <a href="/settings"><img src="../static/Icons/settings.png" class="nav_icons"></a>
+        </nav>
+
+        <div class="container">
+            <h1>{{ title }}</h1>
+            <hr>
+            <form method="get" action="">
+                <label for="filter_date">Filter by Date:</label>
+                <input type="date" id="filter_date" name="filter_date"
+                       value="{{ selected_date }}" required>
+                <button type="submit">Filter</button>
+            </form>
+            
+            <div class="gallery">
+                {% if grouped_images %}
+                    {% for date, images in grouped_images.items() %}
+                        <h2>{{ date }}</h2>
+                        {% for image in images %}
+                            <img src="{{ url_for('serve_intrusion_image', subpath=image) }}" alt="Intrusion Image">
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <p>No intrusions found for this date.</p>
+                {% endif %}
+            </div>            
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+.env/
+.env.* 
+
+# PyTorch model weights
+*.pt
+
+# SQLite DB backups (optional)
+*.db
+*.sqlite3
+
+# VSCode or IDE settings (optional)
+.vscode/
+.idea/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Byte-compiled files
+*.egg-info/
+dist/
+build/

@@ -1,0 +1,145 @@
+<!--
+Date: April 21, 2025. 3:24 pm.
+3rd Year, 2nd Sem. Finals.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/app.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap" rel="stylesheet">
+    <title>Bike Lane Detection System</title>
+</head>
+<body>
+    <form method="post" action="/generate_report" id="generate_div" onsubmit="return validateDateRange()">
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" required><br/>
+        
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" required><br/>
+    
+        <button type="submit" class="generate_option_button">Generate Report</button>
+        <button id="generate_close_button" onclick="showReportDiv()" type="button">Close</button>
+    </form>
+    
+
+    <main>
+        <nav>
+            <a href="">
+                <img src="../static/Icons/home_selected.png" class="nav_icons">
+            </a>
+            <a href="/cars">
+                <img src="../static/Icons/car.png" class="nav_icons">
+            </a>
+            <a href="/motorcycles">
+                <img src="../static/Icons/motor.png" class="nav_icons">
+            </a>
+            <a href="/public">
+                <img src="../static/Icons/bus.png" class="nav_icons">
+            </a>
+            <a href="/settings">
+                <img src="../static/Icons/settings.png" class="nav_icons">
+            </a>
+        </nav>
+        
+        <div class="grid">
+            <div class="title">
+                <h2>Bike Lane Detection System</h2>
+
+                <form method="post" action="/change_camera">
+                    <label for="camera_index">Switch Camera Source:</label>
+                    <select name="camera_index">
+                        {% for cam in available_cameras %}
+                            <option value="{{ cam }}" {% if cam == current_source %}selected{% endif %}>
+                                Camera {{ cam }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Switch</button>
+                </form>
+            </div>
+
+            <div class="logo-container">
+                <img src="../static/Icons/logo.png" class="logo">
+            </div>
+
+            <div class="video-container">
+                <img src="{{ url_for('video_feed') }}" class="video">
+            </div>
+            
+            
+            <div class="stats-container">
+                <div class="stats">
+                    <h3>Intrusions</h3>
+                    <div class="count-column">
+                        <div class="count-row">
+                            <img src="../static/Icons/car.png" class="count-icon">
+                            <p class="count" id="cars_count">{{ car_count }}</p>
+                        </div>
+                        <div class="count-row">
+                            <img src="../static/Icons/motor.png" class="count-icon">
+                            <p class="count" id="motorcycles_count">{{ motorcycle_count }}</p>
+                        </div>
+                        <div class="count-row">
+                            <img src="../static/Icons/bus.png" class="count-icon">
+                            <p class="count" id="buses_count">{{ bus_count }}</p>
+                        </div>                        
+                    </div>
+                </div>
+                <button class="generate-button" onclick="showReportDiv()">Generate Report</button>
+            </div>
+        </div>
+
+
+    </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const today = new Date().toISOString().split('T')[0];  // Format: YYYY-MM-DD
+            document.getElementById("start_date").value = today;
+            document.getElementById("end_date").value = today;
+        });
+        
+        var generateDiv = document.getElementById("generate_div");
+        generateDiv.style.display = "none";
+
+        function showReportDiv(){
+            if (generateDiv.style.display == "none") {
+                generateDiv.style.display = "flex";
+            } else {
+                generateDiv.style.display = "none";
+            }
+        }
+
+        function updateIntrusionCounts() {
+            fetch('/api/intrusion_counts')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("cars_count").textContent = data.car;
+                    document.getElementById("motorcycles_count").textContent = data.motorcycle;
+                    document.getElementById("buses_count").textContent = data.bus;
+                })
+                .catch(error => console.error("Failed to update counts:", error));
+        }
+
+        // Update every 3 seconds
+        setInterval(updateIntrusionCounts, 3000);
+
+        function validateDateRange() {
+            const startDate = new Date(document.getElementById('start_date').value);
+            const endDate = new Date(document.getElementById('end_date').value);
+
+            if (startDate > endDate) {
+                alert("Start date cannot be later than end date.");
+                return false; // Prevent form submission
+            }
+            return true; // Allow form to submit
+        }
+
+
+    </script>
+</body>
+</html>

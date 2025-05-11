@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Manjari', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+    background-color: #d5dcff;
+    background-repeat: no-repeat;
+	background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body{
+    text-align: center;
+}
+
+.forgot_password{
+    background: none;
+    color: #0502d4;
+    box-shadow: none;
+    font-size: 1em;
+    text-align: right;
+    cursor: pointer;
+}
+
+#login_button, #question_button{
+    justify-content: center;
+    background-color: #ff8010;
+    color: white;
+    font-size: 1.5rem;
+    padding: 1em 3em;
+    transition: 200ms ease-in-out;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+#login_button:hover, #question_button:hover{
+    background-color: black;
+    color: white;
+}
+
+#login_div, #question_div{
+    background-image: url("Icons/login-design.png");
+    background-size: cover;
+    background-color: #22202f;
+    width: 100%;
+    min-width: 900px;
+    max-width: 900px;
+    height: 60vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5vh;
+    padding: 2rem;
+    box-shadow: 12px 12px #01004d;
+}
+
+.login_div_right{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 25em;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    gap: 1em;
+}
+
+#login_header, #question_header{
+    text-align: center;
+    font-family: 'Manjari', sans-serif; 
+    color: #0502d4;
+    font-size: 4rem;
+}
+
+#question_header{
+    line-height: 0.9em;
+}
+
+#security_question{
+    text-align: left;
+    color: #0502d4;
+    font-size: 1em;
+}
+
+#login_password, #answer{    
+    width: 75%;
+    min-height: 35px;
+    padding: 0.8rem;
+    padding-left: 4rem;
+    font-size: 1.2rem;
+    outline: none;
+    border-radius: 1rem;
+    border-color: #0502d4;
+    border-width: 1px;
+}
+
+#login_password{
+    background-image: url("icons/lock.svg");
+    background-repeat: no-repeat;
+    background-size: 8%;
+    background-position-y: 50%;
+    background-position-x: 5%;
+}
+
+#answer{
+    background-image: url("icons/question.svg");
+    background-repeat: no-repeat;
+    background-size: 6%;
+    background-position-y: 50%;
+    background-position-x: 5%;
+    margin-bottom: -0.5em;
+}
+
+#login_password::placeholder, #answer::placeholder{
+    color: #0502d4;
+    opacity: 0.5;
+}
+
+#user_icon{
+    width: 30%;
+    height: 30%;
+}

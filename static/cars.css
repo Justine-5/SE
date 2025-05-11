@@ -1,0 +1,57 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Manjari", sans-serif;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: .5em 0;
+}
+
+hr {
+    border: 0;
+    height: 2px;
+    background-color: black;
+}
+
+.container {
+    flex: 1;
+    padding: 1em;
+}
+
+.gallery h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 1em;
+}
+
+.gallery img {
+    width: 100%;
+    max-width: 8em;
+}
+
+.gallery p {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 1em;
+}
+
+form{
+    margin: .5em 0;
+}
+
+form input {
+    padding: .5em;
+}
+
+form button {
+    background: #0502d4;
+    color: white;
+    padding: .5em 1em;
+    border: none;
+    border-radius: .5em;
+    cursor: pointer;
+}

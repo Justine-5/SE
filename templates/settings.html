@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/general.css">
+    <link rel="stylesheet" href="../static/settings.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap" rel="stylesheet">
+    <title>Settings</title>
+</head>
+<body>
+    <main>
+        <div id="change_security" class="settings_div">
+            <img src="../static/Icons/back.png" class="back_button" onclick="showChangeSecurity()">
+            <div class="settings_info">
+                <h3>Change Security Question</h3>
+                <img src="../static/Icons/changeques.png" class="settings_info_img">
+            </div>
+            <form name="change_ques_form">
+                <label for="new_question" class="change_pass_label">New Security Question</label><br/>
+                <input type="text" placeholder="Enter new security question" name="new_question" class="change_pass_text" required><br/>
+
+                <label for="new_answer" class="change_pass_label">New Answer</label><br/>
+                <input type="text" placeholder="Enter new answer" name="new_answer" class="change_pass_text" required><br/>
+
+                <button type="submit" class="change_pass_button">Save New Security Question</button><br/>
+            </form>
+        </div>
+
+        <div id="change_password" class="settings_div">
+            <img src="../static/Icons/back.png" class="back_button" onclick="showChangePassword()">
+            <div class="settings_info">
+                <h3>Change Password</h3>
+                <img src="../static/Icons/keyhole.png" class="settings_info_img">
+            </div>
+            <form name="change_pass_form">
+                <label for="old_password" class="change_pass_label">Old Password</label><br/>
+                <input type="password" placeholder="Enter old password" name="old_password" id="old_password" class="change_pass_text" required><br/>
+
+                <label for="new_password" class="change_pass_label">New Password</label><br/>
+                <input type="password" placeholder="Enter new password" name="new_password" id="new_password" class="change_pass_text" required><br/>
+
+                <label for="confirm_password" class="change_pass_label">Confirm New Password</label><br/>
+                <input type="password" placeholder="Confirm new password" name="confirm_password" id="confirm_password"  class="change_pass_text" required><br/>
+
+                <button type="submit" class="change_pass_button">Save New Password</button><br/>
+            </form>
+        </div>
+
+        <nav>
+            <a href="/dashboard"><img src="../static/Icons/home.png" class="nav_icons"></a>
+            <a href="/cars"><img src="../static/Icons/car.png" class="nav_icons"></a>
+            <a href="/motorcycles"><img src="../static/Icons/motor.png" class="nav_icons"></a>
+            <a href="/public"><img src="../static/Icons/bus.png" class="nav_icons"></a>
+            <a href=""><img src="../static/Icons/settings_selected.png" class="nav_icons"></a>
+        </nav>
+        <div class="container">
+            <h1>Settings</h1>
+            <hr>
+            <p class="subheader">File Management</p>
+            
+            <div class="settings_option" onclick="createBackup()">
+                <div class="option_left">
+                    <img src="../static/Icons/backup.png" class="settings_icons">
+                </div>
+                <div class="option_right">
+                    <p class="option_header"><b>Backup File</b></p>
+                    <p class="option_def">Save a backup file of the data for guaranteed record</p>
+                </div>
+            </div>
+            <div class="settings_option" onclick="restoreBackup()">
+                <div class="option_left">
+                    <img src="../static/Icons/restore.png" class="settings_icons">
+                </div>
+                <div class="option_right">
+                    <p class="option_header"><b>Restore</b></p>
+                    <p class="option_def">Restore previously saved data</p>
+                </div>
+            </div>
+            <p class="subheader">Manage Account</p>
+            <div class="settings_option" onclick="showChangePassword()">
+                <div class="option_left">
+                    <img src="../static/Icons/password.png" class="settings_icons">
+                </div>
+                <div class="option_right">
+                    <p class="option_header"><b>Change Password</b></p>
+                    <p class="option_def">Change the password of the account</p>
+                </div>
+            </div>
+            <div class="settings_option" onclick="showChangeSecurity()">
+                <div class="option_left">
+                    <img src="../static/Icons/shield.png" class="settings_icons">
+                </div>
+                <div class="option_right">
+                    <p class="option_header"><b>Change Security Question</b></p>
+                    <p class="option_def">Change the security question of the account</p>
+                </div>
+            </div>
+            <button id="logout_button" onclick="logout()">
+                <p>Log Out</p>
+            </button>
+        </div>
+    </main>
+
+    <script>
+        var changePassword = document.getElementById("change_password");
+        changePassword.style.display = "none";
+
+        function showChangePassword(){
+            if (changePassword.style.display == "none") {
+                changePassword.style.display = "flex";
+            } else {
+                changePassword.style.display = "none";
+            }
+        }
+
+
+        var changeSecurity = document.getElementById("change_security");
+        changeSecurity.style.display = "none";
+
+        function showChangeSecurity(){
+            if (changeSecurity.style.display == "none") {
+                changeSecurity.style.display = "flex";
+            } else {
+                changeSecurity.style.display = "none";
+            }
+        }
+
+        document.forms["change_pass_form"].addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const old_password = document.getElementById("old_password").value;
+            const new_password = document.getElementById("new_password").value;
+            const confirm_password = document.getElementById("confirm_password").value;
+
+            if (new_password !== confirm_password) {
+                alert("New passwords do not match!");
+                return;
+            }
+
+            if (new_password.length < 8) {
+                alert("New password must be at least 8 characters long!");
+                return;
+            }
+
+            const res = await fetch("/change_password", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({old_password, new_password})
+            });
+
+            const data = await res.json();
+            alert(data.message);
+            if (data["success"] == true) {
+                showChangePassword();
+            } 
+        });
+
+        document.forms["change_ques_form"].addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const new_question = e.target.new_question.value;
+            const new_answer = e.target.new_answer.value;
+
+            const res = await fetch("/change_security_question", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({new_question, new_answer})
+            });
+
+            const data = await res.json();
+            alert(data.message);
+            if (data["success"] == true) {
+                showChangeSecurity();
+            } 
+        });
+
+        function createBackup(){
+            window.location.href = "/backup";
+        }
+
+        function restoreBackup() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.csv';
+            input.onchange = e => {
+                const file = e.target.files[0];
+                const formData = new FormData();
+                formData.append('file', file);
+
+                fetch('/restore', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(async response => {
+                    const text = await response.text();
+                    if (response.ok) {
+                        alert(text);
+                        location.reload();
+                    } else {
+                        alert("Restore failed: " + text);
+                    }
+                })
+                .catch(err => {
+                    alert('Error restoring backup: ' + err.message);
+                });
+            };
+            input.click();
+        }
+
+        function logout() {
+            window.location.href = "/logout";
+            response.headers.add('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0')
+        }
+
+    </script>
+</body>
+</html>

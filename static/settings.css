@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Manjari';
+}
+
+main {
+    position: relative;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: .5em 0;
+}
+
+.settings_div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95%;
+    max-width: 40em;
+    padding: 2em;
+    border-radius: 1em ;
+    background-color: white;
+    border-style: solid;
+    border-color: #8c9fff;
+    border-width: 1px;
+    display: flex;
+    flex-direction: column;
+    z-index: 5;
+}
+
+.back_button {
+    position: absolute;
+    top: 2em;
+    left: 2em;
+    cursor: pointer;
+}
+
+.settings_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .5em 0;
+    margin-bottom: 2em;
+}
+
+.settings_info h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+}
+
+.settings_info_img {
+    width: 100%;
+    max-width: 4em;
+}
+
+.change_pass_button{
+    background-color: #0502d4;
+    min-width: 100%;
+    font-size: 1rem;
+    padding: 1.2em;
+    transition: 200ms ease-in-out;
+    border: none;
+    border-radius: 0.7em;
+    cursor: pointer;
+    color: white;
+}
+
+.change_pass_button:hover {
+    background-color: #8c9fff;
+}
+
+.change_pass_label{
+    flex-grow: 1;
+    display: flex;
+    width: 100%;
+    font-size: 1.1rem;
+    margin-bottom: -3%;
+    text-align: left;
+}
+
+.change_pass_text{
+    flex-grow: 0;
+    display: flex;
+    width: 100%;
+    margin-bottom: 0.5%;
+    font-size: 1rem;
+    padding: 3%;
+    padding-left: 13%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #6c69ff;
+    border-radius: 0.7em;
+    background-image: url("Icons/password.png");
+    background-repeat: no-repeat;
+    background-size: 6%;
+    background-position-y: 50%;
+    background-position-x: 4%;
+}
+
+.change_pass_text::placeholder{
+    color: #6c69ff;
+}
+
+
+/* hkdsafkaSJJKDAshdjk */
+
+hr {
+    border: 0;
+    height: 2px;
+    background-color: black;
+}
+
+#logout_button {
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    vertical-align: center;
+    background-color: #0502d4;
+    padding: 1em 2em;
+    border: none;
+    border-radius: 0.7em;
+    margin-bottom: 1em;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+.option_header{
+    font-family: 'Manjari-B';
+    font-size: 1.2em;
+    color: #01004d;
+}
+
+.option_def{
+    opacity: 0.8;
+    font-size: 1em;
+    color: #01004d;
+}
+
+.option_left{
+    display: inline-block;
+    justify-content: center;
+}
+
+.option_right{
+    padding-left: 1.5em;
+    display: inline-block;
+}
+
+.container {
+    flex: 1;
+    padding: 1em;
+    max-width: 80em;
+    display: flex;
+    flex-direction: column;
+}
+
+.subheader{
+    font-size: 1.2em;
+    margin-bottom: 0.7em;
+    margin-top: 1em;
+}
+
+.settings_icons{
+    width: 2.5em;
+}
+
+.settings_option{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 1em;
+    padding-left: 2em;
+    border-radius: 0.7em;
+    margin-bottom: 0.8em;
+    border-style: solid;
+    border-color: #d5dcff;
+    border-width: 2px;
+    cursor: pointer;
+    transition: ease-in-out 100ms;
+}
+
+.settings_option:hover, #logout_button:hover, #back_button:hover{
+    background-color: #8c9fff;
+}
