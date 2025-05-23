@@ -55,3 +55,7 @@ form button {
     border-radius: .5em;
     cursor: pointer;
 }
+
+.image-group {
+    margin-bottom: 1em;
+}

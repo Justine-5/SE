@@ -14,9 +14,15 @@
     <main>
         <nav>
             <a href="/dashboard"><img src="../static/Icons/home.png" class="nav_icons"></a>
-            <a href="/cars"><img src="../static/Icons/car.png" class="nav_icons"></a>
-            <a href="/motorcycles"><img src="../static/Icons/motor.png" class="nav_icons"></a>
-            <a href="/public"><img src="../static/Icons/bus.png" class="nav_icons"></a>
+            <a href="/cars">
+                <img src="{% if active_page == 'cars' %}../static/Icons/car_selected.png{% else %}../static/Icons/car.png{% endif %}" class="nav_icons">
+            </a>
+            <a href="/motorcycles">
+                <img src="{% if active_page == 'motorcycles' %}../static/Icons/motor_selected.png{% else %}../static/Icons/motor.png{% endif %}" class="nav_icons">
+            </a>
+            <a href="/public">
+                <img src="{% if active_page == 'public' %}../static/Icons/bus_selected.png{% else %}../static/Icons/bus.png{% endif %}" class="nav_icons">
+            </a>
             <a href="/settings"><img src="../static/Icons/settings.png" class="nav_icons"></a>
         </nav>
 
@@ -32,16 +38,18 @@
             
             <div class="gallery">
                 {% if grouped_images %}
-                    {% for date, images in grouped_images.items() %}
-                        <h2>{{ date }}</h2>
-                        {% for image in images %}
-                            <img src="{{ url_for('serve_intrusion_image', subpath=image) }}" alt="Intrusion Image">
-                        {% endfor %}
+                    {% for time, images in grouped_images.items() %}
+                        <h3>{{ time }}</h3>
+                        <div class="image-group">
+                            {% for image in images %}
+                                <img src="{{ url_for('serve_intrusion_image', subpath=image) }}" alt="Intrusion Image">
+                            {% endfor %}
+                        </div>
                     {% endfor %}
                 {% else %}
                     <p>No intrusions found for this date.</p>
                 {% endif %}
-            </div>            
+            </div>       
         </div>
     </main>
 </body>

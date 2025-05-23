@@ -31,3 +31,7 @@ Thumbs.db
 *.egg-info/
 dist/
 build/
+
+# folders
+instance/
+intrusion_screenshots/

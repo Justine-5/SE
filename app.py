@@ -101,7 +101,7 @@ def serve_intrusion_image(subpath):
     return send_from_directory('intrusion_screenshots', subpath)
 
 
-def get_intrusions_by_vehicle_types(vehicle_types, title):
+def get_intrusions_by_vehicle_types(vehicle_types, title, pageTitle):
     if not session.get("logged_in"):
         return redirect(url_for("index"))
 
@@ -122,20 +122,20 @@ def get_intrusions_by_vehicle_types(vehicle_types, title):
         db.func.date(Intrusion.timestamp) == selected_date
     ).order_by(Intrusion.timestamp.desc()).all()
 
-    # Group and build image paths
     grouped_images = defaultdict(list)
     for intrusion in intrusions:
         abs_path = os.path.join(os.getcwd(), intrusion.image_path)
         if os.path.exists(abs_path):
-            date_str = intrusion.timestamp.strftime("%B %d, %Y")
+            time_str = intrusion.timestamp.strftime("%I:%M %p")  # e.g., 02:30 PM
             url_path = intrusion.image_path.replace("\\", "/").replace("intrusion_screenshots/", "")
-            grouped_images[date_str].append(url_path)
+            grouped_images[time_str].append(url_path)
 
     return render_template(
         "intrusions.html",
         title=title,
         grouped_images=grouped_images,
-        selected_date=selected_date_str
+        selected_date=selected_date_str,
+        active_page=pageTitle,
     )
 
 
@@ -143,15 +143,15 @@ def get_intrusions_by_vehicle_types(vehicle_types, title):
 
 @app.route('/cars')
 def show_cars():
-    return get_intrusions_by_vehicle_types(["Car", "Truck"], "Private Vehicles (Cars and Trucks)")
+    return get_intrusions_by_vehicle_types(["Car", "Truck"], "Private Vehicles (Cars and Trucks)", "cars")
 
 @app.route('/motorcycles')
 def show_motorcycles():
-    return get_intrusions_by_vehicle_types(["Motorcycle"], "Motorcycles")
+    return get_intrusions_by_vehicle_types(["Motorcycle"], "Motorcycles", "motorcycles")
 
 @app.route('/public')
 def show_public_vehicles():
-    return get_intrusions_by_vehicle_types(["Bus", "Jeep"], "Public Utility Vehicles")
+    return get_intrusions_by_vehicle_types(["Bus", "Jeep"], "Public Utility Vehicles", "public")
 
 @app.route('/api/intrusion_counts')
 def intrusion_counts():

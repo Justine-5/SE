@@ -142,7 +142,7 @@ def generate_frames(video_source=0):
                     elif names[int(cls)] != "Bike":
                         vehicle_boxes.append((x1, y1, x2, y2))
                         vehicle_names.append(names[int(cls)])
-                        plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=1)
+                        # plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=1)
 
         intrusion_centroids = []
         intrusion_boxes = []
